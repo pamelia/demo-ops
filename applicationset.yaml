@@ -28,6 +28,4 @@ spec:
         server: https://kubernetes.default.svc
         namespace: 'demo-{{ customer }}'
       syncPolicy:
-        automated:
-          prune: true
-          selfHeal: true
+        automated: {}
