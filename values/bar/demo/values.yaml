@@ -1,6 +1,6 @@
 
 customer:
-  name: foo
+  name: bar
 
-replicaCount: 2
+replicaCount: 3
 
