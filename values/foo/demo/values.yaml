@@ -1,0 +1,6 @@
+
+customer:
+  name: foo
+
+replicaCount: 2
+
