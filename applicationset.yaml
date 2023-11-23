@@ -10,7 +10,7 @@ spec:
           - customer: bar
   template:
     metadata:
-      name: 'demo-{{customerName}}'
+      name: 'demo-{{customer}}'
       annotations:
         argocd.argoproj.io/manifest-generate-paths: ".;.."
     spec:
@@ -23,13 +23,11 @@ spec:
           releaseName: "demo"
           valueFiles:
             - "values.yaml"
-            - "../../values/{{customerName}}/demo/values.yaml"
+            - "../../values/{{customer}}/demo/values.yaml"
       destination:
         server: https://kubernetes.default.svc
-        namespace: 'demo-{{ namespace }}'
+        namespace: 'demo-{{ customer }}'
       syncPolicy:
         automated:
           prune: true
           selfHeal: true
-        syncOptions:
-          - CreateNamespace=true
