@@ -8,6 +8,8 @@ spec:
         elements:
           - customer: foo
           - customer: bar
+          - customer: abc
+          - customer: def
   template:
     metadata:
       name: 'demo-{{customer}}'
@@ -28,4 +30,8 @@ spec:
         server: https://kubernetes.default.svc
         namespace: 'demo-{{ customer }}'
       syncPolicy:
-        automated: {}
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true

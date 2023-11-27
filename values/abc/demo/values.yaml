@@ -1,0 +1,6 @@
+
+customer:
+  name: abc
+
+replicaCount: 1
+
