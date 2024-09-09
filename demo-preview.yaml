@@ -1,0 +1,41 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: demo
+spec:
+  generators:
+    - pullRequest:
+        requeueAfterSeconds: 120
+        github:
+          owner: pamelia
+          repo: demo
+          appSecretName: repo-1072009106
+          labels:
+            - preview
+  template:
+    metadata:
+      name: "demo-preview-{{number}}"
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/pamelia/demo-ops.git
+        targetRevision: HEAD
+        path: "charts/demo"
+        helm:
+          releaseName: "demo"
+          valueFiles:
+            - "values.yaml"
+          valuesObject:
+            customer:
+              name: "preview-{{number}}"
+            image:
+              tag: "{{head_short_sha_7}}"
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: 'demo-preview-{{ number }}'
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
